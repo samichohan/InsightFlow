@@ -117,6 +117,15 @@ async def upload_file(
 
     logger.info(f"File uploaded: {file.filename} → project {project_id}")
 
+    df = PROJECT_SESSIONS.get(project_id, {}).get("dataframe")
+
+    
+    preview = (
+    df.head(10).fillna("").to_dict(orient="records")
+    if df is not None
+    else []
+    )
+
     return {
         "project_id": project_id,
         "filename": file.filename,
@@ -126,8 +135,7 @@ async def upload_file(
         "quality_score": quality_score,
         "columns": col_metadata.get("columns", []),
         "column_types": col_metadata.get("column_types", {}),
-        "preview": PROJECT_SESSIONS.get(project_id, {}).get("dataframe", None) and
-                   PROJECT_SESSIONS[project_id]["dataframe"].head(10).fillna("").to_dict(orient="records"),
+         "preview": preview,
     }
 
 
