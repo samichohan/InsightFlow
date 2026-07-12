@@ -822,3 +822,259 @@ It helps the project reach more developers and motivates future improvements.
 ## 📄 License
 
 This project is licensed under the MIT License.
+
+
+# 📈 Project Statistics
+
+| Metric | Value |
+|---------|------:|
+| AI Agents | 10+ |
+| REST API Endpoints | 37+ |
+| Database Tables | 5 |
+| Supported File Formats | 7 |
+| Report Formats | 3 |
+| Interactive Charts | 8+ |
+| Deployment Platforms | 3 |
+| Authentication | JWT |
+| Database | PostgreSQL |
+| Frontend | React + Vite |
+| Backend | FastAPI |
+| AI Model | Llama 3.3 (Groq) |
+
+---
+
+# 📊 Supported File Formats
+
+| Format | Status |
+|---------|--------|
+| CSV | ✅ |
+| Excel (.xlsx) | ✅ |
+| Excel (.xls) | ✅ |
+| JSON | ✅ |
+| Parquet | ✅ |
+| PDF | ✅ |
+| TXT | ✅ |
+
+---
+
+# 📊 Generated Analytics
+
+InsightFlow automatically performs:
+
+- ✅ Dataset Overview
+- ✅ Missing Value Detection
+- ✅ Duplicate Detection
+- ✅ Outlier Detection
+- ✅ Column Type Detection
+- ✅ Data Quality Score
+- ✅ Statistical Summary
+- ✅ Correlation Analysis
+- ✅ Interactive Charts
+- ✅ Executive Dashboard
+- ✅ Business Insights
+- ✅ AI Recommendations
+- ✅ Machine Learning Forecast
+- ✅ Smart Dataset Chat
+- ✅ Professional Reports
+
+---
+
+# 🔐 Security Features
+
+- JWT Authentication
+- Password Hashing
+- Protected API Routes
+- Environment Variables (.env)
+- PostgreSQL Authentication
+- Input Validation
+- File Type Validation
+- Upload Size Validation
+- Global Exception Handling
+- Structured Logging
+
+---
+
+# ⚡ Performance Features
+
+- Async FastAPI
+- Async SQLAlchemy
+- Axios API Client
+- React Context API
+- Modular Architecture
+- AI Agent Pipeline
+- Cloud PostgreSQL
+- Interactive Plotly Charts
+
+---
+
+# 🎯 Skills Demonstrated
+
+This project demonstrates practical experience with:
+
+### Backend
+
+- Python
+- FastAPI
+- REST APIs
+- SQLAlchemy
+- Async Programming
+- Authentication
+- API Design
+
+### Frontend
+
+- React
+- Vite
+- React Router
+- Axios
+- Tailwind CSS
+- Context API
+
+### Data Science
+
+- Pandas
+- NumPy
+- Statistics
+- Data Cleaning
+- EDA
+- Data Visualization
+
+### Machine Learning
+
+- Scikit-learn
+- Linear Regression
+- Polynomial Regression
+- Forecasting
+
+### Artificial Intelligence
+
+- Large Language Models
+- Prompt Engineering
+- AI Agents
+- Dataset Chat
+- AI Insights
+
+### Database
+
+- PostgreSQL
+- Neon Database
+- ORM Relationships
+
+### Deployment
+
+- GitHub
+- Railway
+- Vercel
+
+---
+
+# 💼 Why InsightFlow?
+
+Unlike traditional analytics tools, InsightFlow combines:
+
+- Artificial Intelligence
+- Business Intelligence
+- Machine Learning
+- Interactive Visualization
+- Conversational Analytics
+
+into one modern SaaS platform.
+
+Users don't need SQL or Python knowledge.
+
+Simply upload a dataset and receive intelligent insights in seconds.
+
+---
+
+# 🆚 Comparison
+
+| Feature | InsightFlow | Traditional BI Tools |
+|----------|-------------|----------------------|
+| AI Insights | ✅ | ❌ |
+| Dataset Chat | ✅ | ❌ |
+| Automated Recommendations | ✅ | ❌ |
+| Interactive Charts | ✅ | ✅ |
+| Dashboard | ✅ | ✅ |
+| Forecasting | ✅ | Limited |
+| Report Export | ✅ | ✅ |
+| Cloud Database | ✅ | ✅ |
+
+---
+
+# 🚀 Future Enhancements
+
+- Docker
+- Docker Compose
+- GitHub Actions (CI/CD)
+- Redis Caching
+- Supabase Storage
+- Email Verification
+- Multi-file Analysis
+- Team Collaboration
+- Mobile Application
+- Stripe Subscription
+- Kubernetes
+- Monitoring & Logging
+- WebSockets
+- API Marketplace
+
+---
+
+# 🌟 Highlights
+
+✔ Production-Level Architecture
+
+✔ Cloud PostgreSQL Database
+
+✔ AI-Powered Analytics
+
+✔ Interactive Dashboard
+
+✔ Machine Learning Forecasting
+
+✔ JWT Authentication
+
+✔ Railway Deployment
+
+✔ Vercel Deployment
+
+✔ REST API
+
+✔ Modular Codebase
+
+✔ Scalable Architecture
+
+---
+
+# 🤝 Contributing
+
+Contributions are welcome!
+
+If you'd like to improve InsightFlow:
+
+1. Fork the repository
+2. Create a feature branch
+3. Commit your changes
+4. Push the branch
+5. Open a Pull Request
+
+---
+
+# 📬 Contact
+
+**Developer:** Sami Chohan
+
+- GitHub: https://github.com/samichohan
+- Project Repository: https://github.com/samichohan/InsightFlow
+
+---
+
+<div align="center">
+
+## ⭐ If you like this project, please consider giving it a Star.
+
+Your support motivates future improvements and helps more developers discover InsightFlow.
+
+Made with ❤️ by **Sami Chohan**
+
+</div>
