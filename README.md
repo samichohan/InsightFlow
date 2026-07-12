@@ -1,5 +1,30 @@
-<div align="center">
+<p align="center">
+  <img src="./banner.png" alt="InsightFlow Banner" width="100%">
+</p>
 
+<div align="center">
+<h1 align="center">
+AI Data Analyst Pro
+</h1>
+
+Production-Level AI SaaS Platform for Intelligent Data Analysis
+</p>
+
+<p align="center">
+
+<a href="https://insight-flow-chi-smoky.vercel.app">
+<img src="https://img.shields.io/badge/🌐_Live_Demo-Vercel-000000?style=for-the-badge"/>
+</a>
+
+<a href="https://insightflow-production-6395.up.railway.app/docs">
+<img src="https://img.shields.io/badge/API-Swagger-success?style=for-the-badge"/>
+</a>
+
+<a href="https://insightflow-production-6395.up.railway.app">
+<img src="https://img.shields.io/badge/Backend-Railway-purple?style=for-the-badge"/>
+</a>
+
+</p>
 # 🚀 InsightFlow
 
 ### AI-Powered Data Analytics SaaS Platform
