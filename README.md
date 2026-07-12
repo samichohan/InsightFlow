@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="assets/hero-banner.png" width="100%">
+</p>
+
 <div align="center">
 
 # 🚀 InsightFlow
