@@ -8,6 +8,7 @@ Tables:
   reports        → generated report metadata
   activity_logs  → tracks user actions (login, upload, etc.)
 """
+import ssl
 
 from datetime import datetime
 from sqlalchemy import (
@@ -20,12 +21,16 @@ from app.core.config import settings
 
 
 # ── Engine ───────────────────────────────────────────────────────────────────
+ssl_context = ssl.create_default_context()
 engine = create_async_engine(
     settings.DATABASE_URL,
     echo=settings.DEBUG,
     pool_pre_ping=True,
     pool_size=10,
     max_overflow=20,
+    connect_args={
+        "ssl": ssl_context
+    }
 )
 
 AsyncSessionLocal = async_sessionmaker(

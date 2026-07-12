@@ -119,12 +119,13 @@ async def upload_file(
 
     df = PROJECT_SESSIONS.get(project_id, {}).get("dataframe")
 
-    
+
     preview = (
     df.head(10).fillna("").to_dict(orient="records")
     if df is not None
     else []
     )
+
 
     return {
         "project_id": project_id,
