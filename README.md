@@ -1,218 +1,824 @@
-# 🧠 AI Data Analyst Pro — Production SaaS Platform
+<div align="center">
 
-A full-stack, production-level AI Data Analyst platform with user authentication,
-PostgreSQL database, 10 specialized AI agents, streaming chat, voice input/output,
-and professional report generation.
+# 🚀 InsightFlow
 
----
+### AI-Powered Data Analytics SaaS Platform
 
-## 🏗️ Architecture
+Transform raw datasets into meaningful insights with Artificial Intelligence, Machine Learning, and Interactive Dashboards.
 
-```
-User Browser (React + Vite + Tailwind)
-         │
-    HTTPS REST API
-         │
-FastAPI Backend (Python)
-    ├── JWT Auth
-    ├── PostgreSQL (Neon/Supabase - Free)
-    ├── File Storage (local/Supabase)
-    └── 10 AI Agents
-         ├── Groq API (LLM)
-         ├── scikit-learn (ML)
-         ├── pandas/numpy
-         ├── matplotlib/seaborn/plotly
-         └── ChromaDB (RAG)
-```
+<p align="center">
 
----
+<a href="https://insight-flow-chi-smoky.vercel.app">
+<img src="https://img.shields.io/badge/🌐_Live_Demo-Vercel-000000?style=for-the-badge"/>
+</a>
 
-## 🤖 10 AI Agents
+<a href="https://insightflow-production-6395.up.railway.app/docs">
+<img src="https://img.shields.io/badge/API-Swagger-success?style=for-the-badge"/>
+</a>
 
-| # | Agent | Technology | Skill |
-|---|-------|-----------|-------|
-| 1 | Data Cleaning | pandas, numpy | Missing values, duplicates, outliers |
-| 2 | EDA | pandas, numpy | Statistics, correlations, distributions |
-| 3 | Visualization | matplotlib, seaborn, plotly | 8 chart types (static + interactive) |
-| 4 | Business Insights | Groq LLM | Prompt Engineering, Gen AI |
-| 5 | Recommendations | Groq LLM | Prompt Engineering, Agentic AI |
-| 6 | Forecasting | scikit-learn | Linear/Polynomial Regression, ML |
-| 7 | Report Generator | reportlab, python-docx, python-pptx | PDF, DOCX, PPTX |
-| 8 | SQL Agent | SQLite, Groq LLM | Natural Language → SQL |
-| 9 | Pandas Agent | pandas exec, Groq LLM | Natural Language → Python |
-| 10 | Dashboard Agent | pandas, Groq LLM | Auto KPI Dashboard |
+<a href="https://insightflow-production-6395.up.railway.app">
+<img src="https://img.shields.io/badge/Backend-Railway-purple?style=for-the-badge"/>
+</a>
+
+</p>
+
+<p align="center">
+
+<img src="https://img.shields.io/badge/Python-3.11-blue"/>
+<img src="https://img.shields.io/badge/FastAPI-Production-green"/>
+<img src="https://img.shields.io/badge/React-18-61DAFB"/>
+<img src="https://img.shields.io/badge/PostgreSQL-Neon-336791"/>
+<img src="https://img.shields.io/badge/AI-Groq-orange"/>
+<img src="https://img.shields.io/badge/Deployment-Vercel%20%7C%20Railway-black"/>
+
+</p>
+
+</div>
 
 ---
 
-## 📁 Project Structure
+# 🌍 Live Demo
 
+| Service | URL |
+|----------|-----|
+| **Frontend** | https://insight-flow-chi-smoky.vercel.app |
+| **Backend API** | https://insightflow-production-6395.up.railway.app |
+| **Swagger Docs** | https://insightflow-production-6395.up.railway.app/docs |
+
+---
+
+# 📖 About InsightFlow
+
+InsightFlow is a **Production-Level AI SaaS Platform** designed to help users analyze datasets without writing code.
+
+Instead of manually cleaning data, creating charts, calculating statistics, or writing SQL queries, users simply upload a dataset and InsightFlow performs the complete analysis automatically using multiple AI Agents.
+
+The platform combines **Artificial Intelligence**, **Machine Learning**, **Business Intelligence**, and **Modern Web Technologies** into a single application.
+
+---
+
+# ✨ Core Features
+
+## 👤 Authentication
+
+- JWT Authentication
+- User Registration
+- Secure Login
+- Password Hashing
+- Protected API Routes
+
+---
+
+## 📂 Dataset Upload
+
+Supports
+
+- CSV
+- Excel
+- JSON
+- Parquet
+- PDF
+- TXT
+
+---
+
+## 📊 Automatic Data Analysis
+
+- Data Quality Detection
+- Missing Values Detection
+- Duplicate Detection
+- Outlier Detection
+- Statistical Analysis
+- Interactive Charts
+- Dashboard Generation
+
+---
+
+## 🤖 AI Powered Features
+
+- AI Business Insights
+- AI Recommendations
+- Smart Dataset Chat
+- Forecasting
+- Automated Reports
+
+---
+
+# 🏗 System Architecture
+
+```text
+                              USER
+                                │
+                                ▼
+                     React Frontend (Vercel)
+                                │
+                     REST API Requests (Axios)
+                                │
+                                ▼
+                    FastAPI Backend (Railway)
+                                │
+        ┌──────────────┬───────────────┬──────────────┐
+        │              │               │              │
+        ▼              ▼               ▼              ▼
+
+   AI Agents      Authentication    PostgreSQL     File Storage
+                                   (Neon Cloud)   (Local Storage)
+
+        │
+        ▼
+
+Business Insights
+Charts
+Forecast
+Reports
+Dashboard
+Chat
 ```
-ai-analyst-pro/
-├── backend/
-│   ├── app/
-│   │   ├── agents/          ← 10 AI Agents
-│   │   ├── api/             ← FastAPI routes (auth, projects, analysis, chat)
-│   │   ├── core/            ← Config, Auth, LLM client, File loader, Logging
-│   │   ├── db/              ← SQLAlchemy models + async engine
-│   │   └── schemas/         ← Pydantic request/response models
-│   ├── storage/             ← uploads, charts, reports (auto-created)
-│   ├── requirements.txt
-│   └── .env.example
+
+---
+
+# 🔄 Complete Request Flow
+
+```text
+User
+
+↓
+
+Login
+
+↓
+
+Upload Dataset
+
+↓
+
+Backend validates file
+
+↓
+
+Dataset stored
+
+↓
+
+AI Agents execute
+
+↓
+
+Data Cleaning
+
+↓
+
+EDA
+
+↓
+
+Visualization
+
+↓
+
+Insights
+
+↓
+
+Recommendations
+
+↓
+
+Forecasting
+
+↓
+
+Reports
+
+↓
+
+Results returned to Frontend
+```
+
+---
+
+# 📂 Project Structure
+
+```text
+InsightFlow
 │
-└── frontend/
-    ├── src/
-    │   ├── pages/           ← Landing, Login, Signup, Dashboard, ProjectPage
-    │   ├── components/      ← Navbar, UploadZone, PlotlyChart, UI components
-    │   ├── context/         ← AuthContext (global login state)
-    │   ├── hooks/           ← useSpeechRecognition (mic + TTS)
-    │   └── lib/             ← Axios API client
-    └── .env
+├── backend/
+│
+│   ├── app/
+│   │
+│   ├── agents/
+│   │      ├── Data Cleaning Agent
+│   │      ├── EDA Agent
+│   │      ├── Visualization Agent
+│   │      ├── Dashboard Agent
+│   │      ├── Insight Agent
+│   │      ├── Recommendation Agent
+│   │      ├── Forecast Agent
+│   │      ├── SQL Agent
+│   │      ├── Pandas Agent
+│   │      ├── Smart Chat Agent
+│   │      └── Report Agent
+│   │
+│   ├── api/
+│   │      ├── auth.py
+│   │      ├── projects.py
+│   │      ├── analysis.py
+│   │      └── chat.py
+│   │
+│   ├── core/
+│   │      ├── config.py
+│   │      ├── auth.py
+│   │      ├── llm_client.py
+│   │      ├── logging_config.py
+│   │      ├── exceptions.py
+│   │      └── file_loader.py
+│   │
+│   ├── db/
+│   │      └── database.py
+│   │
+│   ├── schemas/
+│   │
+│   ├── storage/
+│   │      ├── uploads/
+│   │      ├── charts/
+│   │      └── reports/
+│   │
+│   ├── main.py
+│   │
+│   └── requirements.txt
+│
+├── frontend/
+│
+│   ├── src/
+│   │
+│   ├── components/
+│   ├── pages/
+│   ├── hooks/
+│   ├── context/
+│   ├── lib/
+│   ├── App.jsx
+│   └── main.jsx
+│
+├── README.md
+│
+└── .gitignore
 ```
 
 ---
 
-## ⚙️ Setup & Run
+# 📦 Backend Folder Explanation
 
-### Step 1: Database Setup (Free)
-
-**Option A: Neon PostgreSQL (Recommended)**
-1. Go to https://neon.tech → Create account → New project
-2. Copy the connection string
-
-**Option B: Local PostgreSQL**
-```bash
-createdb ai_analyst_db
-```
-
-### Step 2: Backend Setup
-
-```bash
-cd backend
-python -m venv venv
-
-# Windows:
-venv\Scripts\activate
-# Mac/Linux:
-source venv/bin/activate
-
-pip install -r requirements.txt
-
-# Create .env file
-copy .env.example .env   # Windows
-cp .env.example .env     # Mac/Linux
-```
-
-Edit `.env`:
-```
-SECRET_KEY=your-random-secret-key-at-least-32-chars
-DATABASE_URL=postgresql+asyncpg://user:password@host/dbname
-GROQ_API_KEY=your_groq_key_here
-```
-
-Start backend:
-```bash
-uvicorn app.main:app --reload --port 8001
-```
-
-Visit: http://localhost:8001/docs (Interactive API docs)
-
-### Step 3: Frontend Setup
-
-```bash
-cd frontend
-npm install
-npm run dev
-```
-
-Visit: http://localhost:5173
+| Folder | Purpose |
+|----------|----------|
+| **agents/** | AI agents responsible for data cleaning, visualization, forecasting, reporting, recommendations and chat |
+| **api/** | FastAPI endpoints used by the frontend |
+| **core/** | Authentication, configuration, logging, exceptions and LLM integration |
+| **db/** | SQLAlchemy models and PostgreSQL database connection |
+| **schemas/** | Request and response validation models |
+| **storage/** | Stores uploaded datasets, generated charts and reports |
+| **main.py** | Entry point of the FastAPI application |
 
 ---
 
-## 🌟 Features
+# 🎨 Frontend Folder Explanation
 
-### Authentication
-- ✅ Signup / Login / Logout
-- ✅ Email verification (token-based)
-- ✅ Forgot / Reset password
-- ✅ JWT (Access + Refresh tokens)
-- ✅ Change password
-- ✅ Delete account
+| Folder | Purpose |
+|----------|----------|
+| **pages/** | Application screens |
+| **components/** | Reusable UI components |
+| **context/** | Authentication state management |
+| **hooks/** | Custom React hooks |
+| **lib/** | Axios API client |
+| **App.jsx** | Application routing |
+| **main.jsx** | React entry point |
 
-### Dashboard
-- ✅ Total projects, reports, chat messages stats
-- ✅ Recent projects list
-- ✅ Activity log
-- ✅ Quick upload
 
-### Analysis (ProjectPage — 10 Tabs)
-- ✅ Overview (row count, columns, quality score, data preview)
-- ✅ Data Quality (missing values, cleaning suggestions, one-click clean)
-- ✅ EDA (mean, median, mode, variance, skewness, correlations)
-- ✅ Charts (8 interactive Plotly charts)
-- ✅ Dashboard (Auto KPI cards, top performers, executive summary)
-- ✅ Insights (8-10 detailed LLM-generated insights)
-- ✅ Recommendations (6-8 actionable LLM recommendations)
-- ✅ Forecast (ML model, R² score, accuracy, forecast chart)
-- ✅ Chat (streaming, voice input, TTS, memory, agent routing)
-- ✅ Reports (PDF + DOCX + PPTX download)
+# 🗄 Database Architecture
 
-### Smart Chat
-- ✅ Auto-detects which agent to use (SQL/Pandas/Chart/Forecast/General)
-- ✅ Column auto-mapping ("price" → "revenue" if price doesn't exist)
-- ✅ Conversation memory (last 10 messages)
-- ✅ Language auto-detect (English/Urdu/Hindi/Hinglish)
-- ✅ Voice input (mic button) — Chrome/Edge only
-- ✅ Text-to-speech output
-- ✅ Streaming responses (Server-Sent Events)
-- ✅ Suggested follow-up questions
-- ✅ Chat history saved in PostgreSQL
+InsightFlow uses **PostgreSQL (Neon Cloud Database)** as its primary database.
 
----
+```
+                PostgreSQL (Neon)
+                        │
+        ┌───────────────┼────────────────┐
+        │               │                │
+        ▼               ▼                ▼
 
-## 🛠️ Skills Used
+     Users         Projects      Chat Messages
+        │               │                │
+        └───────────────┼────────────────┘
+                        ▼
 
-| Skill | Where |
-|-------|-------|
-| Python | Entire backend |
-| pandas / numpy | Agents 1, 2, 3, 6, 9 |
-| Matplotlib / Seaborn | Static charts (Agent 3) |
-| Plotly | Interactive charts (Agent 3) |
-| scikit-learn | Forecasting Agent (Agent 6) |
-| FastAPI | All API routes |
-| SQLAlchemy (async) | Database ORM |
-| PostgreSQL | Production database |
-| JWT Authentication | User auth system |
-| Groq LLM | Agents 4, 5, 8, 9, 10, Chat |
-| Prompt Engineering | All LLM agents |
-| RAG (ChromaDB) | Document chat |
-| Agentic AI | 10-agent orchestration pipeline |
-| MLOps concepts | Logging, retry, error handling |
-| React.js | Frontend UI |
-| Tailwind CSS | Styling |
-| React Router | Page navigation |
-| Axios | HTTP client |
-| Web Speech API | Voice input + TTS |
-| Streaming (SSE) | Real-time chat responses |
+                  Reports
+
+                        │
+
+                        ▼
+
+                 Activity Logs
+```
 
 ---
 
-## ☁️ Free Deployment
+## Database Tables
 
-| Service | Platform | Free Tier |
-|---------|----------|-----------|
-| Frontend | Vercel | ✅ Free |
-| Backend | Render | ✅ Free |
-| Database | Neon PostgreSQL | ✅ Free |
-| File Storage | Supabase Storage | ✅ Free |
-| AI | Groq API | ✅ Free |
+### 👤 users
+
+Stores user authentication and profile information.
+
+| Column | Description |
+|---------|-------------|
+| id | User ID |
+| email | User Email |
+| password_hash | Encrypted Password |
+| created_at | Registration Date |
+| last_login | Last Login |
 
 ---
 
-## ⚠️ Important Notes
+### 📂 projects
 
-1. **Never commit .env** — it contains your API keys
-2. **Groq free tier** has rate limits — if you see 503 errors, wait 60 seconds
-3. **Voice input** works in Chrome and Edge only (Web Speech API)
-4. **PostgreSQL required** — the app will fail to start without a valid DATABASE_URL
-5. **Email verification** — in development, the token is returned in the API response
-   (in production, configure SMTP to send actual emails)
+Stores uploaded datasets.
+
+| Column | Description |
+|---------|-------------|
+| id | Project ID |
+| user_id | Owner |
+| filename | Dataset Name |
+| file_path | Dataset Location |
+| quality_score | Data Quality |
+| rows | Total Rows |
+| columns | Total Columns |
+
+---
+
+### 💬 chat_messages
+
+Stores complete AI conversation history.
+
+| Column | Description |
+|---------|-------------|
+| id | Chat ID |
+| project_id | Dataset |
+| role | User / Assistant |
+| message | Conversation |
+| created_at | Timestamp |
+
+---
+
+### 📄 reports
+
+Stores generated reports.
+
+| Column | Description |
+|---------|-------------|
+| id | Report ID |
+| project_id | Dataset |
+| report_type | PDF / DOCX / PPTX |
+| report_path | File Location |
+
+---
+
+### 📊 activity_logs
+
+Tracks every user activity.
+
+Examples
+
+- Login
+- Upload
+- Chat
+- Report Generation
+- Forecast
+
+---
+
+# 🤖 AI Agent Architecture
+
+InsightFlow uses multiple specialized AI Agents.
+
+Each agent performs one dedicated task.
+
+```
+Dataset
+
+      │
+
+      ▼
+
+Data Cleaning Agent
+
+      │
+
+      ▼
+
+EDA Agent
+
+      │
+
+      ▼
+
+Visualization Agent
+
+      │
+
+      ▼
+
+Insight Agent
+
+      │
+
+      ▼
+
+Recommendation Agent
+
+      │
+
+      ▼
+
+Forecast Agent
+
+      │
+
+      ▼
+
+Dashboard Agent
+
+      │
+
+      ▼
+
+Smart Chat Agent
+
+      │
+
+      ▼
+
+Report Agent
+
+      │
+
+      ▼
+
+User
+```
+
+---
+
+# 🤖 AI Agents
+
+## 🧹 Data Cleaning Agent
+
+Responsible for
+
+- Missing Values
+- Duplicate Detection
+- Outlier Detection
+- Quality Score
+
+---
+
+## 📈 EDA Agent
+
+Calculates
+
+- Mean
+- Median
+- Mode
+- Variance
+- Standard Deviation
+- Correlation
+- Distribution
+
+---
+
+## 📊 Visualization Agent
+
+Creates
+
+- Bar Charts
+- Line Charts
+- Pie Charts
+- Scatter Charts
+- Histograms
+- Heatmaps
+- Plotly Interactive Charts
+
+---
+
+## 💡 Insight Agent
+
+Uses LLM to generate
+
+- Business Insights
+- Trend Detection
+- Hidden Patterns
+
+---
+
+## 🎯 Recommendation Agent
+
+Generates
+
+- Business Recommendations
+- Improvement Suggestions
+- Action Plans
+
+---
+
+## 🔮 Forecast Agent
+
+Uses Machine Learning
+
+- Linear Regression
+- Polynomial Regression
+- R² Score
+- MAE
+
+---
+
+## 🗄 Dashboard Agent
+
+Automatically generates
+
+- KPI Cards
+- Executive Summary
+- Dataset Overview
+
+---
+
+## 💬 Smart Chat Agent
+
+Allows users to
+
+- Ask questions
+- Chat with Dataset
+- Generate AI Responses
+
+---
+
+## 📄 Report Agent
+
+Exports
+
+- PDF
+- DOCX
+- PPTX
+
+---
+
+# 🌐 API Endpoints
+
+## Authentication
+
+```
+POST   /auth/signup
+
+POST   /auth/login
+
+GET    /auth/me
+
+POST   /auth/forgot-password
+
+POST   /auth/reset-password
+```
+
+---
+
+## Projects
+
+```
+POST   /projects/upload
+
+GET    /projects/
+
+GET    /projects/{id}
+
+DELETE /projects/{id}
+
+GET    /projects/dashboard/stats
+```
+
+---
+
+## Analysis
+
+```
+GET  /analyze/quality
+
+GET  /analyze/eda
+
+GET  /analyze/charts
+
+GET  /analyze/dashboard
+
+GET  /analyze/insights
+
+GET  /analyze/recommendations
+
+POST /analyze/forecast
+
+POST /analyze/report
+```
+
+---
+
+## Chat
+
+```
+POST /chat/{project_id}
+
+GET /chat/{project_id}/history
+
+DELETE /chat/{project_id}/history
+```
+
+---
+
+# ⚙ Technology Stack
+
+## Backend
+
+- Python
+- FastAPI
+- SQLAlchemy
+- AsyncIO
+- JWT Authentication
+- Pydantic
+
+---
+
+## Frontend
+
+- React
+- Vite
+- Axios
+- React Router
+- Tailwind CSS
+
+---
+
+## Artificial Intelligence
+
+- Groq API
+- Llama 3.3
+- Prompt Engineering
+
+---
+
+## Machine Learning
+
+- Pandas
+- NumPy
+- Scikit-learn
+
+---
+
+## Visualization
+
+- Plotly
+- Matplotlib
+- Seaborn
+
+---
+
+## Database
+
+- PostgreSQL
+- Neon Database
+
+---
+
+## Deployment
+
+- Railway
+- Vercel
+- GitHub
+
+---
+
+# 🚀 Deployment Architecture
+
+```
+Developer
+
+      │
+
+      ▼
+
+GitHub Repository
+
+      │
+
+      ├───────────────┐
+
+      ▼               ▼
+
+ Railway         Vercel
+
+      │               │
+
+      ▼               ▼
+
+ Backend       Frontend
+
+      │
+
+      ▼
+
+ Neon PostgreSQL
+```
+
+---
+
+# 📸 Application Screenshots
+
+> Screenshots will be added here.
+
+- Landing Page
+
+- Dashboard
+
+- Upload Dataset
+
+- Charts
+
+- AI Chat
+
+- Reports
+
+- Forecast
+
+---
+
+# 🛣 Roadmap
+
+## Completed
+
+- User Authentication
+
+- JWT Security
+
+- PostgreSQL
+
+- AI Agents
+
+- Dashboard
+
+- Reports
+
+- Forecasting
+
+- AI Chat
+
+- Railway Deployment
+
+- Vercel Deployment
+
+---
+
+## Coming Soon
+
+- Docker
+
+- Docker Compose
+
+- GitHub Actions (CI/CD)
+
+- Redis Cache
+
+- Supabase Storage
+
+- Email Verification
+
+- Team Collaboration
+
+- Mobile App
+
+- Stripe Subscription
+
+---
+
+# 👨‍💻 Developer
+
+## Sami Chohan
+
+AI Engineer | Full Stack AI Developer
+
+GitHub
+
+https://github.com/samichohan
+
+---
+
+# ⭐ Support
+
+If you found this project useful, please consider giving it a ⭐ on GitHub.
+
+It helps the project reach more developers and motivates future improvements.
+
+---
+
+## 📄 License
+
+This project is licensed under the MIT License.
