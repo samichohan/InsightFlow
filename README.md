@@ -1,5 +1,5 @@
 <div align="center">
-
+![Backend CI](https://github.com/samichohan/InsightFlow/actions/workflows/backend.yml/badge.svg)
 # 🚀 InsightFlow
 
 ### AI-Powered Data Analytics SaaS Platform
