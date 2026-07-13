@@ -36,10 +36,8 @@ backend/app/storage/reports/
 backend/app/storage/uploads/
 
 # Optional
-*.pdf
-*.docx
-*.pptx
-*.png
+
+
 
 
 # OS
