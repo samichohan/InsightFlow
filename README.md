@@ -1,5 +1,5 @@
 <div align="center">
-![Backend CI](https://github.com/samichohan/InsightFlow/actions/workflows/backend.yml/badge.svg)
+
 # 🚀 InsightFlow
 
 ### AI-Powered Data Analytics SaaS Platform
@@ -15,7 +15,7 @@ Transform Raw Data into Intelligent Business Insights using Artificial Intellige
 <a href="https://insight-flow-chi-smoky.vercel.app">
 <img src="https://img.shields.io/badge/🌐%20Live%20Demo-Vercel-000000?style=for-the-badge&logo=vercel"/>
 </a>
-
+![Backend CI](https://github.com/samichohan/InsightFlow/actions/workflows/backend.yml/badge.svg)
 <a href="https://insightflow-production-6395.up.railway.app/docs">
 <img src="https://img.shields.io/badge/API-Swagger-success?style=for-the-badge&logo=fastapi"/>
 </a>
