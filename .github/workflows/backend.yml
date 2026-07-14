@@ -36,8 +36,9 @@ jobs:
           python -c "import fastapi; print('FastAPI Installed Successfully')"
 
       - name: Verify Application Imports
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
+          SUPABASE_BUCKET: ${{ secrets.SUPABASE_BUCKET }}
         run: |
           python -c "from app.main import app; print('Application Imported Successfully')"
-
-      - name: CI Completed
-        run: echo "Backend CI Passed Successfully 🚀"
