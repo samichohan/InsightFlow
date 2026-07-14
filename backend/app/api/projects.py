@@ -4,7 +4,7 @@ import os
 import uuid
 import shutil
 from datetime import datetime
-
+from app.core.supabase_client import supabase, BUCKET_NAME
 from fastapi import APIRouter, Depends, UploadFile, File, HTTPException
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy import select, func, desc
@@ -53,8 +53,24 @@ async def upload_file(
     project_id = str(uuid.uuid4())
     save_path = os.path.join(settings.UPLOAD_DIR, f"{project_id}{ext}")
 
+    storage_path = f"{project_id}/{file.filename}"
+
     with open(save_path, "wb") as f:
         f.write(contents)
+
+    try:
+        supabase.storage.from_(BUCKET_NAME).upload(
+            path=storage_path,
+            file=contents,
+            file_options={
+                "content-type": file.content_type
+            }
+        )
+    except Exception as e:
+        raise HTTPException(500, f"Supabase upload failed: {e}")
+
+      
+
 
     # Load and analyze
     total_rows = total_cols = quality_score = None
@@ -102,7 +118,7 @@ async def upload_file(
         user_id=current_user.id,
         name=file.filename.rsplit(".", 1)[0],
         filename=file.filename,
-        file_path=save_path,
+        file_path=storage_path,
         file_type=ext.lstrip("."),
         file_size_mb=round(size_mb, 2),
         total_rows=total_rows,
@@ -168,18 +184,18 @@ async def get_project(
     if not project:
         raise HTTPException(404, "Project not found")
 
-    # Reload into session if not loaded
-    if project_id not in PROJECT_SESSIONS:
-        if is_structured(project.file_path):
-            try:
-                df = load_file(project.file_path)
-                PROJECT_SESSIONS[project_id] = {
-                    "dataframe": df, "type": "structured",
-                    "dataset_name": project.filename,
-                    "column_metadata": project.column_metadata or {},
-                }
-            except:
-                pass
+    # # Reload into session if not loaded
+    # if project_id not in PROJECT_SESSIONS:
+    #     if is_structured(project.file_path):
+    #         try:
+    #             df = load_file(project.file_path)
+    #             PROJECT_SESSIONS[project_id] = {
+    #                 "dataframe": df, "type": "structured",
+    #                 "dataset_name": project.filename,
+    #                 "column_metadata": project.column_metadata or {},
+    #             }
+    #         except:
+    #             pass
 
     session = PROJECT_SESSIONS.get(project_id, {})
 
@@ -212,9 +228,12 @@ async def delete_project(
     if not project:
         raise HTTPException(404, "Project not found")
 
-    # Remove file from disk
-    if os.path.exists(project.file_path):
-        os.remove(project.file_path)
+
+    # TODO: Delete file from Supabase Storage
+    # Local delete disabled because files are now stored in Supabase.
+    # # Remove file from disk
+    # if os.path.exists(project.file_path):
+    #     os.remove(project.file_path)
 
     # Remove from session
     PROJECT_SESSIONS.pop(project_id, None)
