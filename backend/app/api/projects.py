@@ -2,18 +2,20 @@
 
 import os
 import uuid
-import shutil
-from datetime import datetime
-from app.core.supabase_client import supabase, BUCKET_NAME
+
+
+from app.core import storage
+
 from fastapi import APIRouter, Depends, UploadFile, File, HTTPException
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy import select, func, desc
+import tempfile
 
 from app.db.database import get_db, User, Project, ChatMessage, Report, ActivityLog
-from app.core.auth import get_current_user, get_verified_user
+from app.core.auth import get_current_user
 from app.core.config import settings
 from app.core.file_loader import load_file, extract_pdf_text, extract_txt_text, is_structured
-from app.core.exceptions import FileError
+
 from app.core.logging_config import logger
 from app.agents.data_cleaning_agent import analyze_quality
 from app.schemas.schemas import ProjectResponse, DashboardStatsResponse
@@ -59,13 +61,12 @@ async def upload_file(
         f.write(contents)
 
     try:
-        supabase.storage.from_(BUCKET_NAME).upload(
-            path=storage_path,
-            file=contents,
-            file_options={
-                "content-type": file.content_type
-            }
+        storage.upload_file(
+            storage_path=storage_path,
+            file_bytes=contents,
+            content_type=file.content_type,
         )
+     
     except Exception as e:
         raise HTTPException(500, f"Supabase upload failed: {e}")
 
@@ -184,6 +185,56 @@ async def get_project(
     if not project:
         raise HTTPException(404, "Project not found")
 
+    # Reload into session if not loaded
+    if project_id not in PROJECT_SESSIONS:
+    
+
+        try:
+            file_bytes = storage.download_file(project.file_path)
+
+            ext = "." + project.file_type
+
+            with tempfile.NamedTemporaryFile(delete=False, suffix=ext) as tmp:
+                tmp.write(file_bytes)
+                temp_path = tmp.name
+
+            if is_structured(temp_path):
+
+                df = load_file(temp_path)
+
+                PROJECT_SESSIONS[project_id] = {
+                    "dataframe": df,
+                    "type": "structured",
+                    "dataset_name": project.filename,
+                    "column_metadata": project.column_metadata or {},
+            }
+
+            elif project.file_type == "pdf":
+
+                text = extract_pdf_text(temp_path)
+
+                PROJECT_SESSIONS[project_id] = {
+                    "type": "document",
+                    "text": text,
+                    "dataset_name": project.filename,
+            }
+
+            elif project.file_type == "txt":
+
+                text = extract_txt_text(temp_path)
+
+                PROJECT_SESSIONS[project_id] = {
+                    "type": "document",
+                    "text": text,
+                    "dataset_name": project.filename,
+            }
+
+            os.remove(temp_path)
+
+        except Exception as e:
+            logger.error(f"Could not restore project from Supabase: {e}")
+
+
     # # Reload into session if not loaded
     # if project_id not in PROJECT_SESSIONS:
     #     if is_structured(project.file_path):
@@ -228,7 +279,14 @@ async def delete_project(
     if not project:
         raise HTTPException(404, "Project not found")
 
+    try:
+        storage.delete_file(project.file_path)
+    
+    except Exception:
+        pass
 
+    if os.path.exists(save_path := os.path.join(settings.UPLOAD_DIR, f"{project.id}.{project.file_type}")):
+        os.remove(save_path)
     # TODO: Delete file from Supabase Storage
     # Local delete disabled because files are now stored in Supabase.
     # # Remove file from disk
