@@ -140,11 +140,11 @@ async def login(request: LoginRequest, db: AsyncSession = Depends(get_db)):
     if not user.is_active:
         raise HTTPException(401, "Account is deactivated")
     
-    if not user.is_verified:
-        raise HTTPException(
-            status_code=403,
-            detail="Please verify your email before logging in."
-        )
+    # if not user.is_verified:
+    #     raise HTTPException(
+    #         status_code=403,
+    #         detail="Please verify your email before logging in."
+    #     )
 
 
     # Update last login
