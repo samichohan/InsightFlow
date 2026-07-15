@@ -1,5 +1,6 @@
 """api/auth.py — Authentication routes (signup, login, email verify, forgot password)."""
 
+from unittest import result
 import uuid
 from datetime import datetime
 from fastapi import APIRouter, Depends, HTTPException, BackgroundTasks
@@ -19,48 +20,83 @@ from app.schemas.schemas import (
     ChangePasswordRequest, UserResponse, UpdateProfileRequest
 )
 from app.core.logging_config import logger
+from app.core.email import send_verification_email
 
 router = APIRouter(prefix="/auth", tags=["Authentication"])
 
 
 # ── Signup ────────────────────────────────────────────────────────────────────
 @router.post("/signup", status_code=201)
-async def signup(request: SignupRequest, db: AsyncSession = Depends(get_db)):
-    # Check email exists
-    result = await db.execute(select(User).where(User.email == request.email))
-    if result.scalar_one_or_none():
-        raise HTTPException(400, "Email already registered")
+async def signup(
+    request: SignupRequest,
+    background_tasks: BackgroundTasks,
+    db: AsyncSession = Depends(get_db)
+):
 
-    # Check username exists
-    result = await db.execute(select(User).where(User.username == request.username))
-    if result.scalar_one_or_none():
-        raise HTTPException(400, "Username already taken")
+    try:
+        print(request)    
+        print("Signup:", request.email, request.username)
+        # Check email exists
+        
+        result = await db.execute(select(User).where(User.email == request.email))
+        if result.scalar_one_or_none():
+            raise HTTPException(
+                status_code=400,
+                detail="Email already registered"
+            )
+        
 
-    user = User(
-        id=str(uuid.uuid4()),
-        email=request.email,
-        username=request.username,
-        full_name=request.full_name,
-        hashed_password=hash_password(request.password),
-        is_active=True,
-        is_verified=True,   # needs email verification
-    )
-    db.add(user)
-    await db.commit()
-    await db.refresh(user)
+        # Check username exists
+        result = await db.execute(
+        select(User).where(User.username == request.username)
+            )
 
-    # Generate verification token
-    token = create_email_token(user.id)
-    logger.info(f"New user registered: {user.email}")
+        existing_username = result.scalar_one_or_none()
 
-    # In production, send email with this token
-    # For development, return token directly so user can verify immediately
-    return {
-        "message": "Account created successfully! Please verify your email.",
-        "user_id": user.id,
-        "verification_token": token,  # Remove in production, send via email
-    }
+        print("existing_username =", existing_username)
 
+        if existing_username:
+            raise HTTPException(
+                status_code=400,
+                detail="Username already taken"
+            )
+
+        
+        user = User(
+            id=str(uuid.uuid4()),
+            email=request.email,
+            username=request.username,
+            full_name=request.full_name,
+            hashed_password=hash_password(request.password),
+            is_active=True,
+            is_verified=False,   # needs email verification
+        )
+        db.add(user)
+        await db.commit()
+        await db.refresh(user)
+
+        # Generate verification token
+        token = create_email_token(user.id)
+
+        await send_verification_email(
+            user.email,
+            token
+        )
+
+        logger.info(f"New user registered: {user.email}")
+
+        # In production, send email with this token
+        # For development, return token directly so user can verify immediately
+        return {
+            "message": "Account created successfully! Please verify your email.",
+            "user_id": user.id,
+                            # Remove in production, send via email
+        }
+
+
+    except Exception as e:
+        print("ERROR:", repr(e))
+        raise
 
 # ── Verify Email ──────────────────────────────────────────────────────────────
 @router.get("/verify/{token}")
@@ -90,6 +126,13 @@ async def login(request: LoginRequest, db: AsyncSession = Depends(get_db)):
 
     if not user.is_active:
         raise HTTPException(401, "Account is deactivated")
+    
+    if not user.is_verified:
+        raise HTTPException(
+            status_code=403,
+            detail="Please verify your email before logging in."
+        )
+
 
     # Update last login
     user.last_login = datetime.utcnow()
