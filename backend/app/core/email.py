@@ -1,31 +1,61 @@
-import resend
+import smtplib
+from email.mime.multipart import MIMEMultipart
+from email.mime.text import MIMEText
 
 from app.core.config import settings
-
-resend.api_key = settings.RESEND_API_KEY
 
 
 async def send_verification_email(email: str, token: str):
     verify_link = f"{settings.FRONTEND_URL}/verify/{token}"
 
-    resend.Emails.send({
-        "from": f"InsightFlow <{settings.FROM_EMAIL}>",
-        "to": email,
-        "subject": "Verify your InsightFlow account",
-        "html": f"""
-        <h2>Welcome to InsightFlow</h2>
+    subject = "Verify your InsightFlow account"
 
-        <p>Click below to verify your email.</p>
+    body = f"""
+    <h2>Welcome to InsightFlow</h2>
 
-        <a href="{verify_link}"
-           style="padding:12px 20px;
-                  background:#2563eb;
-                  color:white;
-                  text-decoration:none;
-                  border-radius:6px;">
-            Verify Email
-        </a>
+    <p>Click the button below to verify your email.</p>
 
-        <p>If you didn't create this account, ignore this email.</p>
-        """
-    })
+    <a href="{verify_link}"
+       style="padding:12px 20px;
+              background:#2563eb;
+              color:white;
+              text-decoration:none;
+              border-radius:6px;">
+        Verify Email
+    </a>
+
+    <p>If you didn't create this account, ignore this email.</p>
+    """
+
+    msg = MIMEMultipart()
+    msg["From"] = settings.FROM_EMAIL
+    msg["To"] = email
+    msg["Subject"] = subject
+
+    msg.attach(MIMEText(body, "html"))
+
+    try:
+        print("Connecting SMTP...")
+
+        server = smtplib.SMTP(settings.SMTP_HOST, settings.SMTP_PORT)
+
+        print("Starting TLS...")
+        server.starttls()
+
+        print("Logging in...")
+        server.login(settings.SMTP_USER, settings.SMTP_PASSWORD)
+
+        print("Sending email...")
+        server.sendmail(
+            settings.FROM_EMAIL,
+            email,
+            msg.as_string()
+        )
+
+        print("✅ Email sent successfully!")
+
+        server.quit()
+
+    except Exception as e:
+        print("SMTP ERROR:", str(e))
+        raise

@@ -40,8 +40,7 @@ class Settings(BaseSettings):
     SMTP_PORT: int = 587
     SMTP_USER: str = ""
     SMTP_PASSWORD: str = ""
-    RESEND_API_KEY: str = ""
-    FROM_EMAIL: str = "onboarding@resend.dev"
+    FROM_EMAIL: str = ""
     
 
 

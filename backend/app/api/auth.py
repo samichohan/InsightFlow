@@ -25,35 +25,34 @@ from app.core.email import send_verification_email
 router = APIRouter(prefix="/auth", tags=["Authentication"])
 
 
-# ── Signup ────────────────────────────────────────────────────────────────────
+# ── Signup ───────────────────────────────────────────────────────────────
 @router.post("/signup", status_code=201)
 async def signup(
     request: SignupRequest,
     background_tasks: BackgroundTasks,
     db: AsyncSession = Depends(get_db)
 ):
-
     try:
-        print(request)    
+        print(request)
         print("Signup:", request.email, request.username)
-        # Check email exists
-        
-        result = await db.execute(select(User).where(User.email == request.email))
-        if result.scalar_one_or_none():
+
+        # Check if email already exists
+        result = await db.execute(
+            select(User).where(User.email == request.email)
+        )
+        existing_email = result.scalar_one_or_none()
+
+        if existing_email:
             raise HTTPException(
                 status_code=400,
                 detail="Email already registered"
             )
-        
 
-        # Check username exists
+        # Check if username already exists
         result = await db.execute(
-        select(User).where(User.username == request.username)
-            )
-
+            select(User).where(User.username == request.username)
+        )
         existing_username = result.scalar_one_or_none()
-
-        print("existing_username =", existing_username)
 
         if existing_username:
             raise HTTPException(
@@ -61,7 +60,7 @@ async def signup(
                 detail="Username already taken"
             )
 
-        
+        # Create user
         user = User(
             id=str(uuid.uuid4()),
             email=request.email,
@@ -69,8 +68,9 @@ async def signup(
             full_name=request.full_name,
             hashed_password=hash_password(request.password),
             is_active=True,
-            is_verified=False,   # needs email verification
+            is_verified=False,
         )
+
         db.add(user)
         await db.commit()
         await db.refresh(user)
@@ -78,6 +78,7 @@ async def signup(
         # Generate verification token
         token = create_email_token(user.id)
 
+        # Send verification email
         await send_verification_email(
             user.email,
             token
@@ -85,19 +86,23 @@ async def signup(
 
         logger.info(f"New user registered: {user.email}")
 
-        # In production, send email with this token
-        # For development, return token directly so user can verify immediately
         return {
             "message": "Account created successfully! Please verify your email.",
             "user_id": user.id,
-                            # Remove in production, send via email
         }
 
+    except HTTPException:
+        raise
 
     except Exception as e:
         print("ERROR:", repr(e))
-        raise
 
+        await db.rollback()
+
+        raise HTTPException(
+            status_code=500,
+            detail=f"Signup failed: {str(e)}"
+        )
 # ── Verify Email ──────────────────────────────────────────────────────────────
 @router.get("/verify/{token}")
 async def verify_email(token: str, db: AsyncSession = Depends(get_db)):
