@@ -33,14 +33,15 @@ async def signup(
     db: AsyncSession = Depends(get_db)
 ):
     try:
-        print(request)
         print("Signup:", request.email, request.username)
 
-        # Check if email already exists
+        # Check Email
         result = await db.execute(
             select(User).where(User.email == request.email)
         )
         existing_email = result.scalar_one_or_none()
+
+        print("existing_email =", existing_email)
 
         if existing_email:
             raise HTTPException(
@@ -48,11 +49,13 @@ async def signup(
                 detail="Email already registered"
             )
 
-        # Check if username already exists
+        # Check Username
         result = await db.execute(
             select(User).where(User.username == request.username)
         )
         existing_username = result.scalar_one_or_none()
+
+        print("existing_username =", existing_username)
 
         if existing_username:
             raise HTTPException(
@@ -60,7 +63,8 @@ async def signup(
                 detail="Username already taken"
             )
 
-        # Create user
+        print("Creating user...")
+
         user = User(
             id=str(uuid.uuid4()),
             email=request.email,
@@ -75,33 +79,37 @@ async def signup(
         await db.commit()
         await db.refresh(user)
 
-        # Generate verification token
+        print("User committed")
+
         token = create_email_token(user.id)
 
-        # Send verification email
+        print("Sending verification email...")
+
         await send_verification_email(
             user.email,
             token
         )
 
+        print("Email sent successfully")
+
         logger.info(f"New user registered: {user.email}")
 
         return {
             "message": "Account created successfully! Please verify your email.",
-            "user_id": user.id,
+            "user_id": user.id
         }
 
-    except HTTPException:
+    except HTTPException as e:
+        await db.rollback()
+        print("HTTP ERROR:", e.detail)
         raise
 
     except Exception as e:
-        print("ERROR:", repr(e))
-
         await db.rollback()
-
+        print("UNEXPECTED ERROR:", repr(e))
         raise HTTPException(
             status_code=500,
-            detail=f"Signup failed: {str(e)}"
+            detail=str(e)
         )
 # ── Verify Email ──────────────────────────────────────────────────────────────
 @router.get("/verify/{token}")
