@@ -46,7 +46,7 @@ class Settings(BaseSettings):
 
 
     # Frontend
-    FRONTEND_URL: str = "http://localhost:5173"
+    FRONTEND_URL: str = "https://insight-flow-chi-smoky.vercel.app"
 
         # Supabase
     SUPABASE_URL: str = ""
