@@ -56,4 +56,4 @@ async def send_verification_email(email: str, token: str):
 
     except Exception as e:
         print("SMTP ERROR:", e)
-        raise
+        return
