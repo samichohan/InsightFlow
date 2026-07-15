@@ -34,6 +34,9 @@ async def send_verification_email(email: str, token: str):
 
     msg.attach(MIMEText(body, "html"))
 
+
+    print("SMTP_HOST =", settings.SMTP_HOST)
+    print("SMTP_PORT =", settings.SMTP_PORT)
     try:
         print("Connecting SMTP...")
         server = smtplib.SMTP(settings.SMTP_HOST, settings.SMTP_PORT)
