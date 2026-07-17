@@ -85,12 +85,13 @@ async def signup(
 
         print("Sending verification email...")
 
-        await send_verification_email(
+        background_tasks.add_task(
+            send_verification_email,
             user.email,
             token
         )
 
-        print("Email sent successfully")
+        print("Verification email scheduled")
 
         logger.info(f"New user registered: {user.email}")
 
