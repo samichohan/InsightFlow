@@ -22,7 +22,7 @@ class Settings(BaseSettings):
 
     # AI
     GROQ_API_KEY: str = Field(default="")
-    GROQ_MODEL: str = Field(default="llama-3.3-70b-versatile")
+    GROQ_MODEL: str = Field(default="openai/gpt-oss-120b")
     LLM_TIMEOUT: int = 30
     LLM_MAX_RETRIES: int = 2
 
